@@ -56,14 +56,17 @@ func ShortenURL(c *fiber.Ctx) error {
 			return c.Status(fiber.StatusServiceUnavailable).JSON(fiber.Map{"error": "rate limit exceeded", "limit reset in": limit/time.Nanosecond/time.Minute})
 		}
 	}
+
 	//check is url sent by user is valid
 	if !govalidator.IsURL(body.URL) {	
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "invalid url"})
 	}
+
 	//check for domain error
 	if !helpers.RemoveDomainError(body.URL) {
 		return c.Status(fiber.StatusServiceUnavailable).JSON(fiber.Map{"error": "domain error 🤬🤬"})
 	}
+	
 	//enfore hheps,ssl
 	body.URL = helpers.EnforceHTTP(body.URL)
 
