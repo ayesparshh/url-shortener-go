@@ -26,7 +26,7 @@ type response struct {
 	CustomShortURL      string			 `json:"customshorturl"`
 	Expiry              time.Duration	 `json:"expiry"`
 	XRateRemaining      int				 `json:"xrateremaining"`
-	XRateLimitReset      time.Duration	 `json:"xratelimitreset"`
+	XRateLimitReset     time.Duration	 `json:"xratelimitreset"`
 
 }
 
@@ -44,7 +44,7 @@ func ShortenURL(c *fiber.Ctx) error {
 	defer r2.Close()
 
 	_,err := r2.Get(database.Ctx, c.IP()).Result()
-
+	
 	if err == redis.Nil {
 		_ = r2.Set(database.Ctx, c.IP(),os.Getenv("Apilimit"),30*60*time.Second).Err()
 	}else{
