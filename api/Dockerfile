@@ -17,12 +17,14 @@ RUN adduser -S -D -H -h /app appuser
 
 USER appuser
 
-COPY . /app
+COPY .env /app/.env
 
 COPY --from=builder /build/main /app/
 
 WORKDIR /app
 
 EXPOSE 3000
+
+ENV APP_PORT=3000
 
 CMD ["./main"]

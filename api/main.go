@@ -20,9 +20,8 @@ func main() {
 
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatal("Error loading .env file", err)
 		fmt.Println("Error loading .env file", err)
-		os.Exit(-1)	
 	}
 
 	app := fiber.New()
